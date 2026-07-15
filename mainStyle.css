@@ -1,0 +1,244 @@
+:root {
+  --bg-pink: #fdeaf0;
+  --bg-container: #fff;
+
+  --gradient-brand: linear-gradient(135deg, #5b6bfa 0%, #e29750 50%, #f0879e 100%);
+  --gradient-question: linear-gradient(90deg, #c3dfff 0%, #f8d29f 40%, #ffbe6f 55%, #fde4ec 100%);
+  --gradient-ring: conic-gradient(from 180deg, #7c86e8, #c78bd8, #f0879e, #f7b072, #7c86e8);
+
+  --card-white: #ffffff;
+  --text-dark: #1c1c28;
+  --text-muted: #8b8b96;
+  --badge-gray: #dddddd;
+
+  --radius-button: 6px;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 8px 24px rgba(28, 28, 40, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-pink);
+  color: var(--text-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-container {
+  width: 100%;
+  background: var(--bg-container);
+  max-width: 390px;
+  padding: 16px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: var(--radius-md);
+}
+
+/*Question Card*/
+.question-card {
+  background: var(--card-white);
+  border-radius: var(--radius-lg);
+  padding: 10px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.question-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.question-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.progress-ring {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gradient-ring);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+}
+
+.progress-ring::before {
+  content: "";
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--card-white);
+}
+
+.progress-count {
+  position: relative;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dark);
+  z-index: 1;
+}
+
+.question-container {
+  background: var(--gradient-question);
+  border-radius: var(--radius-button);
+  padding: 32px 20px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.question-text {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--text-dark);
+}
+
+/*choice card*/
+.choices-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.choice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card-white);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1);
+}
+
+.choice:hover{
+    transform: scale(1.05);
+}
+
+.choice-box {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--badge-gray);
+  color: var(--text-dark);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.choice-text {
+  flex: 1 1 auto;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Hide the native radio, replace with a custom circle on the right */
+.choice input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  border-radius: 50%;
+  border: 2px solid var(--text-dark);
+  background: transparent;
+  position: relative;
+  cursor: pointer;
+}
+
+.choice input[type="radio"]:focus-visible {
+  outline: 2px solid #7c86e8;
+  outline-offset: 2px;
+}
+
+/* Selected state: whole row + label text + badge respond to :checked */
+.choice:has(input:checked) {
+  background: var(--gradient-brand);
+}
+
+.choice:has(input:checked) .choice-text {
+  color: var(--card-white);
+}
+
+.choice:has(input:checked) .choice-box {
+  background: rgba(255, 255, 255, 0.25);
+  color: var(--card-white);
+}
+
+.choice input[type="radio"]:checked {
+  border-color: var(--card-white);
+  background: var(--card-white);
+}
+
+.choice input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: #7c86e8;
+}
+
+/*submit*/
+.submit-container {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.submit-container button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 80px;
+  border: none;
+  border-radius: var(--radius-button);
+  background: var(--gradient-brand);
+  color: var(--card-white);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1);
+}
+
+.submit-container button:hover {
+    transform: scale(1.05);
+}
+
+.submit-container button:focus-visible {
+  outline: 2px solid var(--text-dark);
+  outline-offset: 2px;
+}
+
+.submit-container button:active {
+  opacity: 0.9;
+}
