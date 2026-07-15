@@ -1,7 +1,7 @@
 //timing
-const LANDING_DURATION_MS = 10000;
-const CALCULATING_DURATION_MS = 10000;
-const TRANSITION_MS = 600;
+const LANDING_DURATION_MS = 5000;
+const CALCULATING_DURATION_MS = 5000;
+const TRANSITION_MS = 350; // keep in sync with --transition-ms in mainStyle.css
 
 //quiz data
 const quizData = [
@@ -66,25 +66,45 @@ const resultRanges = [
         min: 6,
         max: 8,
         title: "Conservative",
-        message: "Client wants an investment strategy where the primary goal is to prevent the loss of principal while taking on minimal risks and prefers investment grade & highly liquid assets such as deposits & sovereign bonds (i.e. Philippine government securities/ROPs)."
+        message: "Client wants an investment strategy where the primary goal is to prevent the loss of principal while taking on minimal risks and prefers investment grade & highly liquid assets such as deposits & sovereign bonds (i.e. Philippine government securities/ROPs).",
+        recommendation: {
+            sections: [
+                { items: ["Deposits", "Government securities", "Money market funds"] }
+            ]
+        }
     },
     {
         min: 9,
         max: 15,
         title: "Moderate",
-        message: "Client wants a portfolio that provides higher return than bank deposits. Client is willing to be exposed to moderate degree of risk in exchange for higher return. Prefers fixed income instruments such as sovereign & corporate bonds (i.e. Philippine and foreign government securities)."
+        message: "Client wants a portfolio that provides higher return than bank deposits. Client is willing to be exposed to moderate degree of risk in exchange for higher return. Prefers fixed income instruments such as sovereign & corporate bonds (i.e. Philippine and foreign government securities).",
+        recommendation: {
+            sections: [
+                { items: ["Deposits", "Government securities", "Bonds", "Money market funds", "Fixed income funds"] }
+            ]
+        }
     },
     {
         min: 16,
         max: 19,
         title: "Moderately Aggressive",
-        message: "Client wants to grow his/her investments from a combination of interest income and capital appreciation and is willing to take on additional risks. Prefers a mix portfolio of fixed income securities."
+        message: "Client wants to grow his/her investments from a combination of interest income and capital appreciation and is willing to take on additional risks. Prefers a mix portfolio of fixed income securities.",
+        recommendation: {
+            sections: [
+                { items: ["Deposits", "Government securities", "Bonds", "Perpetual capital securities", "Preferred shares", "Money market funds", "Fixed income funds", "Multi-asset funds"] }
+            ]
+        }
     },
     {
         min: 20,
         max: 24,
         title: "Aggressive",
-        message: "Client wants a portfolio that provides capital appreciation over time & is willing to accept higher risks and even possible loss of principal in the interim in exchange for potential higher long-term returns. Client prefers to invest majority of his portfolio in equities and may also invest in structured products and/or derivatives."
+        message: "Client wants a portfolio that provides capital appreciation over time & is willing to accept higher risks and even possible loss of principal in the interim in exchange for potential higher long-term returns. Client prefers to invest majority of his portfolio in equities and may also invest in structured products and/or derivatives.",
+        recommendation: {
+            sections: [
+                { items: ["Deposits", "Government securities", "Bonds", "Perpetual capital securities", "Preferred shares", "Common equities", "Derivatives", "Foreign-issued Government/Corporate securities", "Money market funds", "Fixed income funds", "Multi-asset funds", "Equity funds", "Global pooled funds"] }
+            ]
+        }
     }
 ];
 
@@ -111,8 +131,8 @@ const submitBtn = document.getElementById("submit-btn");
 
 // Results page
 const resultsTitle = document.getElementById("results-title");
-const resultsScore = document.getElementById("results-score");
 const resultsMessage = document.getElementById("results-message");
+const resultsRecommendation = document.getElementById("results-recommendation");
 const retakeBtn = document.getElementById("retake-btn");
 
 //page transitions
@@ -196,6 +216,8 @@ function getResultForScore(score) {
     return resultRanges.find((range) => score >= range.min && score <= range.max);
 }
 
+// Kept for convenience — not currently displayed, but handy if you ever
+// want to show "Score: X / Y" again (see showResults()).
 function getMaxPossibleScore() {
     return quizData.reduce((sum, q) => {
         const highest = Math.max(...q.answers.map((a) => a.points));
@@ -204,13 +226,39 @@ function getMaxPossibleScore() {
 }
 
 //results
+// Builds the recommendation list(s) from data — supports an optional
+// heading per section, so profiles like Aggressive can show two grouped
+// lists (e.g. Philippine vs. Foreign issued products).
+function renderRecommendation(recommendation) {
+    resultsRecommendation.innerHTML = "";
+    if (!recommendation) return;
+
+    recommendation.sections.forEach((section) => {
+        if (section.heading) {
+            const headingEl = document.createElement("p");
+            headingEl.className = "recommendation-subheading";
+            headingEl.textContent = section.heading;
+            resultsRecommendation.appendChild(headingEl);
+        }
+
+        const list = document.createElement("ul");
+        list.className = "recommendation-list";
+        section.items.forEach((item) => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            list.appendChild(li);
+        });
+        resultsRecommendation.appendChild(list);
+    });
+}
+
 function showResults() {
     const score = calculateScore();
     const result = getResultForScore(score);
 
     resultsTitle.textContent = result ? result.title : "Result";
-    resultsScore.textContent = `Score: ${score} / ${getMaxPossibleScore()}`;
     resultsMessage.textContent = result ? result.message : "Thanks for taking the quiz!";
+    renderRecommendation(result ? result.recommendation : null);
 
     transitionTo(calculatingSection, resultsSection);
 }

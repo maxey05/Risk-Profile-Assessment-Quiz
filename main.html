@@ -12,7 +12,7 @@
             <!--Landing Page-->
             <section class = "app-section active" id = "landing-section">
                 <div class = "status-card">
-                    <div class = "loader-ring" aria-hidden = "true"></div>
+                    <img class = "loading-logo" src = "pnb-trust-logo.png" alt = "PNB Trust" />
                     <p class = "status-title">Welcome to your Risk Assessment Profiler</p>
                     <p class = "status-subtext">Answer 6 quick questions to discover your investor risk profile.</p> 
                 </div>
@@ -69,7 +69,7 @@
             <!--Calculate Score-->
             <section class = "app-section" id = "calculating-section" hidden>
                 <div class = "status-card">
-                    <div class = "loader-ring" aria-hidden = "true"></div>
+                    <img class = "loading-logo" src = "pnb-trust-logo.png" alt = "PNB Trust" />
                     <p class = "status-title">Calculating your results&hellip;</p>
                     <p class = "status-subtext">Hang tight while we review your answers.</p>
                 </div>
@@ -86,8 +86,10 @@
                         <p class = "question-text" id = "results-title">Result Title</p> 
                     </div>
 
-                    <p class = "results-score" id = "results-score">Score: 0</p>
                     <p class = "results-message" id = "results-message">Result message goes here.</p>
+
+                    <p class = "recommendation-title">Recommended Product/Portfolio</p>
+                    <div class = "recommendation-content" id = "results-recommendation"></div>
 
                     <div class = "submit-container">
                         <button type = "button" id = "retake-btn">Retake Quiz?</button>
