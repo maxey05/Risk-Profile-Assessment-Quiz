@@ -9,51 +9,94 @@
     <body>
         <div class = "main-container">
 
-            <div class = "question-card">
-                <div class = "question-row">
-                    <span class = "question-label">Question 1</span>
-                    <div class = "progress-ring">
-                        <span class = "progress-counter">1/6</span>
+            <!--Landing Page-->
+            <section class = "app-section active" id = "landing-section">
+                <div class = "status-card">
+                    <div class = "loader-ring" aria-hidden = "true"></div>
+                    <p class = "status-title">Welcome to your Risk Assessment Profiler</p>
+                    <p class = "status-subtext">Answer 6 quick questions to discover your investor risk profile.</p> 
+                </div>
+            </section> 
+
+            <!--Quiz-->
+            <section class = "app-section" id = "quiz-section" hidden>
+                <div class = "question-card">
+                    <div class = "question-row">
+                        <span class = "question-label" id = "question-label">Question 1</span>
+                        <div class = "progress-ring">
+                            <span class = "progress-counter" id = "progress-counter">1/6</span>
+                        </div>
+                    </div>
+
+                    <div class = "question-container">
+                        <p class = "question-text" id = "question-text">Insert question here</p>
                     </div>
                 </div>
 
-                <div class = "question-container">
-                    <p class = "question-text">Insert question here</p>
+                <form class = "choices-container" id = "quiz-form">
+
+                    <label class = "choice">
+                        <span class = "choice-box">A</span>
+                        <span class = "choice-text">Choice 1</span>
+                        <input type = "radio" name = "answer" value = "A">
+                    </label>
+
+                    <label class = "choice">
+                        <span class = "choice-box">B</span>
+                        <span class = "choice-text">Choice 2</span>
+                        <input type = "radio" name = "answer" value = "B">
+                    </label>
+
+                    <label class = "choice">
+                        <span class = "choice-box">C</span>
+                        <span class = "choice-text">Choice 3</span>
+                        <input type = "radio" name = "answer" value = "C">
+                    </label>
+
+                    <label class = "choice">
+                        <span class = "choice-box">D</span>
+                        <span class = "choice-text">Choice 4</span>
+                        <input type = "radio" name = "answer" value = "D">
+                    </label>
+
+                    <div class = "submit-container">
+                        <button type = "submit" id = "submit-btn" disabled>Submit Answer</button>
+                    </div>
+                    
+                </form>
+            </section>
+
+            <!--Calculate Score-->
+            <section class = "app-section" id = "calculating-section" hidden>
+                <div class = "status-card">
+                    <div class = "loader-ring" aria-hidden = "true"></div>
+                    <p class = "status-title">Calculating your results&hellip;</p>
+                    <p class = "status-subtext">Hang tight while we review your answers.</p>
                 </div>
+            </section>
 
-            </div>
+            <!--Results-->
+            <section class = "app-section" id = "results-section" hidden>
+                <div class = "question-card">
+                    <div class = "question-row">
+                        <span class = "question-label">Your Result</span>
+                    </div>
 
-            <form class = "choices-container">
+                    <div class = "question-container">
+                        <p class = "question-text" id = "results-title">Result Title</p> 
+                    </div>
 
-                <label class = "choice">
-                    <span class = "choice-box">A</span>
-                    <span class = "choice-text">Choice 1</span>
-                    <input type = "radio" name = "answer" value = "A">
-                </label>
+                    <p class = "results-score" id = "results-score">Score: 0</p>
+                    <p class = "results-message" id = "results-message">Result message goes here.</p>
 
-                <label class = "choice">
-                    <span class = "choice-box">B</span>
-                    <span class = "choice-text">Choice 2</span>
-                    <input type = "radio" name = "answer" value = "B">
-                </label>
-
-                <label class = "choice">
-                    <span class = "choice-box">C</span>
-                    <span class = "choice-text">Choice 3</span>
-                    <input type = "radio" name = "answer" value = "C">
-                </label>
-
-                <label class = "choice">
-                    <span class = "choice-box">D</span>
-                    <span class = "choice-text">Choice 4</span>
-                    <input type = "radio" name = "answer" value = "D">
-                </label>
-
-                <div class = "submit-container">
-                    <button type = "submit">Submit Answer</button>
+                    <div class = "submit-container">
+                        <button type = "button" id = "retake-btn">Retake Quiz?</button>
+                    </div>
                 </div>
-                
-            </form>
+            </section>
+            
         </div>
+
+        <script src = "logic.js"></script>
     </body>
 </html>
